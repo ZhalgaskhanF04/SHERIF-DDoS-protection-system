@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+	
+	#menu{
+		display: flex;
+		border: 1px solid black;
+		width:82.5em;
+		height:4em;
+		align-items: center;
+		margin-left: 3em;
+		margin-top: 1em;
+		background-color: #a3f3ea;	
+		border-radius: 5px;
+	}
+	#top_left_div{
+		color: #1d1f53;
+		font-size: 20px;
+		margin-left: 10px;
+		border:1px solid black;
+		border-radius: 5px;
+	}
+	#top_right_div{
+		color: #1d1f53;
+		font-size: 20px;
+		margin-left: 40.5em;
+		border:1px solid black;
+		border-radius: 5px;
+	}
+	#menu1{
+		width:60em;
+		margin-top: 2em;
+	}
+</style>
+<head>
+	<title>Reports of DDoS attacks</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id = 'menu'>
+		<div id='top_left_div'><a href="http://localhost:8000/ddos/resources">Resources</a></div>
+		<div id='top_left_div'><a href="http://localhost:8000/ddos/?">Reports</a></div>
+		<div id = 'top_right_div'><a href="http://localhost:8000/admin/?">Admin page</a></div>
+</div>
+
+<div class="container">
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Last 5 detected attacks reports
+    <span class="caret"></span></button>
+{% if latest_attack_list %}
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+    {% for attack in latest_attack_list %}
+        <li><h4>Attack ID:</h4>{{ attack.attack_id}}</li>
+        <li><h4>Resourse IP address: </h4>{{ attack.resourse_ip}}</li>
+        <li><h4>Attack type: </h4>{{ attack.attack_type}}</li>	
+        <li><h4>Graphical statistics during attack:</h4>
+				{% load static %}
+				<img src="{%static 'uploads/attack_stats.png'%}" alt="Not available yet"></li>
+        <li><h4>Attack date:</h4> {{ attack.attack_date}}</li>
+        <li><h4>Report about attack:</h4> {{ attack.attack_report}}</li>
+        <hr>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No attacks are available.</p>
+{% endif %}
+  </div>
+
+</div>
+</body>
+</html>
